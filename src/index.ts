@@ -1,5 +1,9 @@
 import express from "express";
-import config from "dotenv";
+import { connectToDatabase } from './config/db'
+//import config from "dotenv";
+require('dotenv').config();
+
+connectToDatabase();
 
 const app = express();
 const port = 8080 // process.env.PORT; // default port to listen
