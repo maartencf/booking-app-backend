@@ -21,12 +21,13 @@ console.log(url);
              "roomId": 2,
              "roomName": "X-factor",
              "bookedTimes": [{
-             "startDateTime": new Date(1912, 5, 23), // June 23, 1912                                                                                                                                 
-             "endDateTime": new Date(1913, 5, 7),  // June 7, 1954                                                         
-              }],                                                                       
-         }
+             "startDateTime": new Date('02-10-2020 12:00:00'),
+             "endDateTime": new Date('02-10-2020 12:30:00'),
+              }],
+         };
          // Insert a single document, wait for promise so we can read it back
          const p = await col.insertOne(meetingRoomDocument);
+         //const t = await mongoose.Schema.
          // Find one document
          const myDoc = await col.find();
          // Print to the console
