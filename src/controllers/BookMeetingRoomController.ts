@@ -1,11 +1,34 @@
-import { meetingRoom } from '../models/meetingRoomModel'
+import { meetingRoom, meetingRoomModel } from '../models/meetingRoomModel'
 
 export const getAvailableMeetingRooms = async (req: any, res: any) => {
-  console.log(req.body);
+  console.log(req.query);
+  const {startDate, endDate} = req.query;
   // send dateTime with request
-  const meetingRooms = await meetingRoom.find();
-  console.log(meetingRooms);
-  res.status(200).json(meetingRooms);
+  const meetingRooms: meetingRoomModel[] = await meetingRoom.find();
+/*     {bookedTimes: 
+     //  { $not:  
+        { $elemMatch: 
+          {startDate: 
+            {$lt: new Date(endDate)}, 
+          endDate: 
+            {$gt: new Date(startDate)}
+          }
+        }
+      //}
+    }
+  ); */
+
+  const availableMeetingRooms = meetingRooms.filter(
+    (r) => !r.bookedTimes.some(
+      t => t.startDateTime < startDate && t.endDateTime > endDate));
+
+/*   console.log(meetingRooms[0].bookedTimes[0]);
+
+  console.log(new Date(startDate));
+  console.log(new Date(endDate));
+  console.log(availableMeetingRooms); */
+
+  res.status(200).json(availableMeetingRooms);
 };
 
 export const getBookedTimeSlots = async (req: any, res: any) => {
