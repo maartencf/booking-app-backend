@@ -1,12 +1,14 @@
 import dayjs from 'dayjs';
 import { meetingRoom, meetingRoomModel } from '../models/meetingRoomModel'
 
+const formatDate = (date: string) => dayjs(new Date(date)).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+
 export const getAvailableMeetingRooms = async (req: any, res: any) => {
   console.log(req.query);
   const {startDateTime, endDateTime} = req.query;
   // send dateTime with request
-  const meetingRooms: meetingRoomModel[] = await meetingRoom.find(
-    {bookedTimes: 
+  const meetingRooms: meetingRoomModel[] = await meetingRoom.find();
+/*     {bookedTimes: 
        { $not:  
         { $elemMatch: 
           {startDateTime: 
@@ -17,17 +19,17 @@ export const getAvailableMeetingRooms = async (req: any, res: any) => {
         }
       }
     }
-  );
+  ); */
 
     //const timeZoneFromDB = -7.00;
 
     // waarschijnlijk fout!
     //const newStartDate = dayjs(new Date(startDateTime).toUTCString()).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    const formatDate = (date: string) => dayjs(new Date(date)).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     //const newEndDate = dayjs(new Date(endDateTime).toUTCString()).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     console.log(startDateTime);
     console.log("newDate");
     //console.log(newStartDate);
+    console.log(meetingRooms[0].bookedTimes);
 
   const availableMeetingRooms = meetingRooms.filter(
  /*  r => !r.bookedTimes.some(f => f.endDateTime > startDateTime)
@@ -73,7 +75,10 @@ export const getBookedTimeSlots = async (req: any, res: any) => {
 };
 
 export const setReservation = async (req: any, res: any) => {
-  const createReservation = await meetingRoom.update(req.params.id, { $push: {bookedTimes: req.body.params}}, {new: true});
+  console.log("make reservation");
+  console.log(req.params);
+  console.log(req.body);
+  const createReservation = await meetingRoom.updateOne({ roomId: req.params.roomId}, { $push: {bookedTimes: req.body.params}}, {new: true});
   console.log("body");
   console.log(req.body.params);
   res.status(200).json(createReservation);
