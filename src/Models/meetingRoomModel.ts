@@ -13,8 +13,8 @@ export type meetingRoomModel = {
   roomId: Number,
   roomName: String,
   bookedTimes: [{
-    startDateTime: Date,
-    endDateTime: Date,
+    startDateTime: string,
+    endDateTime: string,
   }]
 };
 

@@ -1,3 +1,4 @@
+const dayjs = require("dayjs");
 const { MongoClient } = require("mongodb");
  
 // Replace the following with your Atlas connection string                                                                                                                                        
@@ -15,13 +16,17 @@ const client = new MongoClient(url);
          console.log("Connected correctly to server");
          const db = client.db(dbName);
          // Use the collection "people"
-         //const col = db.collection("MeetingRooms");
-         // Construct a document                                                                                                                                                              
+         const col = db.collection("meetingrooms");
+         // Construct a document                                                                                                                                                  
+         var date1 =dayjs(new Date(1912, 5, 23)).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+         console.log(date1);
+         
          let meetingRoomDocument = {
-             "roomId": 1,
+             "roomId": 4,
+             "roomName": "Lykkehjulet",
              "bookedTimes": [{
-             "startDateTime": new Date(1912, 5, 23), // June 23, 1912                                                                                                                                 
-             "endDateTime": new Date(1913, 5, 7),  // June 7, 1954                                                         
+             "startDateTime": dayjs(new Date(2022, 2, 25)).format('YYYY-MM-DDTHH:mm:ss.SSSZ'),                                                                                             
+             "endDateTime": dayjs(new Date(2022, 2, 25)).format('YYYY-MM-DDTHH:mm:ss.SSSZ'),          
               }],                                                                       
          }
          // Insert a single document, wait for promise so we can read it back
