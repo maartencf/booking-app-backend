@@ -7,3 +7,6 @@ dist/**/*
 
 # Ignore .env file as it holds secrets
 .env
+
+# Ignore files that test CRUD operations
+.insert-data*
