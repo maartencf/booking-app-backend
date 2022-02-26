@@ -9,4 +9,4 @@ dist/**/*
 .env
 
 # Ignore files that test CRUD operations
-.insert-data*
+src/.insert-data*
